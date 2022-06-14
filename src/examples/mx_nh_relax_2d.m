@@ -17,7 +17,7 @@ function [Geo, Mat, Set] = mx_nh_relax_2d(Geo, Mat, Set)
 
     %% Numerical settings
     Set.n_steps = 1;
-    Set.time_incr = 500;
+    Set.time_incr = 50;
     Set.save_freq = 1;
 	
 	Set.plot_stress = true;

@@ -1,4 +1,4 @@
-function K = stressK(k, x, Q_t, Geo, Mat, Set)
+function K = stressK(k, x, s_t, S_t, Q_t, Geo, Mat, Set)
 	x = ref_nvec(x, Geo.n_nodes, Geo.dim);
 	Kg1 = Geo.Kg1; Kg2 = Geo.Kg2;
 	if Set.sparse
@@ -17,7 +17,7 @@ function K = stressK(k, x, Q_t, Geo, Mat, Set)
 		ne = Geo.n(e,:);
 		xe = x(ne,:,:);
 		Xe = Geo.X(ne,:,:);
-		Ke = stressKe(k, xe, Xe, Q_t(:,:,e,:,:), Geo, Mat, Set);
+		Ke = stressKe(k, xe, Xe, s_t(:,e,:,:), S_t(:,e,:,:), Q_t(:,:,e,:,:), Geo, Mat, Set);
 		if Set.sparse
 			for aa = 1:size(Ke,1)
 				for bb = 1:size(Ke,2)

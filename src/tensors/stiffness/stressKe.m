@@ -1,9 +1,9 @@
-function Ke = stressKe(k, xe, Xe, Qe, Geo, Mat, Set)
+function Ke = stressKe(k, xe, Xe, se, Se, Qe, Geo, Mat, Set)
     Ke     = zeros(Geo.n_nodes_elem*Geo.dim, Geo.n_nodes_elem*Geo.dim);
     for gp = 1:size(Set.gaussPoints,1)
         z = Set.gaussPoints(gp,:);
 
-        [sigma, ~]  = stress(k, xe, Xe, Qe(:,:,:,gp,:), z, Mat, Set);
+        [sigma, ~]  = stress(k, xe, Xe, se(:,:,gp,:), Se(:,:,gp,:), Qe(:,:,:,gp,:), z, Mat, Set);
         [dNdx, J]   = getdNdx(xe(:,:,k+Set.dk), z, Geo.n_nodes_elem);
 		
         for a = 1:Geo.n_nodes_elem
