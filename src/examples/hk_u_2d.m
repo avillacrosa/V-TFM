@@ -14,7 +14,7 @@ function [Geo, Mat, Set] = hk_u_2d(Geo, Mat, Set)
     Mat.nu     = 0.3; % No off diagonal terms in D matrix
 
     %% Numerical settings
-    Set.n_steps = 1;
+    Set.time_incr = 10;
 
     fname = dbstack;
 	Set.name = fname.name;

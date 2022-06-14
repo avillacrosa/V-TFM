@@ -10,6 +10,7 @@ function [Geo, Mat, Set] = nh_u_2d(Geo, Mat, Set)
     % Possible types = hookean, neohookean, venant
     Mat.model  = 'elastic'; % Merge these two?
 	Mat.elast  = 'neohookean';
+	
     Mat.E      = 100;
     Mat.nu     = 0.3; % No off diagonal terms in D matrix
 

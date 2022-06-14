@@ -1,5 +1,5 @@
 function plotStress2D(Geo, Mat, Set, Result)
-	figure
+% 	figure
 	hold on
 	plot(Result.time, reshape(max(Result.stress(:,1,:),[],1), size(Result.time)), 'o');
 	plot(Result.time, reshape(max(Result.stress(:,2,:),[],1), size(Result.time)), 'o');

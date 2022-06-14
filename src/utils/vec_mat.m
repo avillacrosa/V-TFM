@@ -4,7 +4,6 @@
 %--------------------------------------------------------------------------
 function vecA = vec_mat(A, fact)
     d = size(A,1);
-    
     vecA = zeros(d*(d+1)/2, size(A,3));
     for i = 1:size(A,3)
         a = A(:,:,i);

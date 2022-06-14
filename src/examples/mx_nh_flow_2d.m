@@ -12,12 +12,13 @@ function [Geo, Mat, Set] = mx_nh_flow_2d(Geo, Mat, Set)
     Mat.model  = 'maxwell'; % Merge these two?
     Mat.elast  = 'neohookean'; % Merge these two?
     Mat.E     = 100;
+	Mat.Ea     = 100;
     Mat.nu    = 0.3; % No off diagonal terms in D matrix
-    Mat.visco = 1;
+    Mat.visco = 0.1;
 
     %% Numerical settings
     Set.n_steps = 1;
-    Set.time_incr = 10;
+    Set.time_incr = 500;
     Set.save_freq = 1;
 
     fname = dbstack;

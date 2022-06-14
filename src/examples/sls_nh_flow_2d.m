@@ -9,10 +9,10 @@ function [Geo, Mat, Set] = sls_nh_flow_2d(Geo, Mat, Set)
     
     %% Material parameters
     % Possible types = hookean, neohookean, venant
-    Mat.model  = 'maxwell'; % Merge these two?
+    Mat.model  = 'gmaxwell'; % Merge these two?
     Mat.elast  = 'neohookean'; % Merge these two?
     Mat.E     = 100;
-	Mat.Einf  = 100;
+	Mat.Ea    = 100;
     Mat.nu    = 0.3; % No off diagonal terms in D matrix
     Mat.visco = 1;
 

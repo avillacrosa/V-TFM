@@ -11,7 +11,8 @@ function [Geo, Mat, Set] = mx_hk_flow_2d(Geo, Mat, Set)
     % Possible types = hookean, neohookean, venant
     Mat.model  = 'maxwell'; % Merge these two?
     Mat.elast  = 'hookean'; % Merge these two?
-    Mat.E     = 100;
+	
+	Mat.E     = 100;
     Mat.nu    = 0.3; % No off diagonal terms in D matrix
     Mat.visco = 1;
 

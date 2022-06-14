@@ -3,14 +3,8 @@ function Ke = constKe(k, xe, Xe, Qe_t, Geo, Mat, Set, calcB)
     for gp = 1:size(Set.gaussPoints,1)
         z = Set.gaussPoints(gp,:);
 		
-		if calcB
-			D = eye(Geo.vect_dim);
-		else
-			% TODO FIXME, add B calcl inside material_c? 
-			% It probably is not necessary anymore!
-			c = ctensor(k, xe, Xe, Qe_t(:,:,:,gp,:), z, Mat, Set);
-        	D = constD(c);
-		end
+		c = ctensor(k, xe, Xe, Qe_t(:,:,:,gp,:), z, Mat, Set);
+    	D = constD(c);
         
         [dNdx, J] = getdNdx(xe(:,:,k+Set.dk), z, Geo.n_nodes_elem);
         B = getB(dNdx);

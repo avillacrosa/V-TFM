@@ -21,12 +21,12 @@ function  [Geo, Mat, Set] = completeDefault(Geo, Mat, Set)
     DefMat = struct();
     DefMat.model    = 'elastic';
 	DefMat.elast    = 'hookean';
+	DefMat.E        = 100;
+	DefMat.Ea       = [];
     DefMat.visco    = 0;
-	DefMat.ve_elems = 1;
-	DefMat.Einf     = 0;
     
     DefSet = struct();
-    DefSet.n_steps       = 10;
+    DefSet.n_steps       = 1;
     DefSet.newton_tol    = 1e-10;
     DefSet.time_incr     = 1;
     DefSet.save_freq     = 1;

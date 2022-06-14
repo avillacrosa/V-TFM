@@ -18,9 +18,13 @@ function K = constK(k, x_t, Q_t, Geo, Mat, Set, calcB)
         ne = Geo.n(e,:);
         xe = x_t(ne,:,:);
         Xe = Geo.X(ne,:,:);
-        if ~strcmpi(Mat.elast, 'hookean') || e == 1
-            Ke = constKe(k, xe, Xe, Q_t(:,:,e,:,:), Geo, Mat, Set, calcB);
-        end
+		if strcmpi(Mat.elast, 'hookean') && e == 1
+			 Xe_t = xe;
+			 Xe_t(:,:,k+Set.dk) = Xe;
+			 Ke = constKe(k, Xe_t, Xe, Q_t(:,:,e,:,:), Geo, Mat, Set, calcB);
+		elseif ~strcmpi(Mat.elast, 'hookean')
+			 Ke = constKe(k, xe, Xe, Q_t(:,:,e,:,:), Geo, Mat, Set, calcB);
+		end
         if Set.sparse
             for aa = 1:size(Ke,1)
                 for bb = 1:size(Ke,2)
