@@ -21,9 +21,10 @@ function  [Geo, Mat, Set] = completeDefault(Geo, Mat, Set)
     DefMat = struct();
     DefMat.model    = 'elastic';
 	DefMat.elast    = 'hookean';
-	DefMat.E        = 100;
-	DefMat.Ea       = [];
-    DefMat.visco    = 0;
+	DefMat.E        = 0;
+	DefMat.nu       = 0;
+	DefMat.c        = [];
+	DefMat.cexp     = [];
     
     DefSet = struct();
     DefSet.n_steps       = 1;

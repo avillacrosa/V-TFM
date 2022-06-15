@@ -1,4 +1,4 @@
-function Result = saveOutData(t, c, k, u, s_t, S_t, F, T, M, Geo, Mat, Set, Result)
+function Result = saveOutData(t, c, k, u, s_t, F, T, M, Geo, Mat, Set, Result)
     	[~, top_idx] = ext_z(0, Geo);
     	
         Result.time(c)       = t;

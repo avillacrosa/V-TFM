@@ -1,4 +1,4 @@
-function [Geo, Mat, Set] = mx_hk_relax_2d(Geo, Mat, Set)
+function [Geo, Mat, Set] = fmx_hk_relax_2d(Geo, Mat, Set)
     %% Geometry parameters
     % Number of nodes in each direction
     Geo.ns = [3 3 1];
@@ -8,19 +8,21 @@ function [Geo, Mat, Set] = mx_hk_relax_2d(Geo, Mat, Set)
     
     %% Material parameters
     % Possible types = hookean, neohookean, venant
-    Mat.model  = 'maxwell'; % Merge these two?
+    Mat.model  = 'fmaxwell'; % Merge these two?
     Mat.elast  = 'hookean'; % Merge these two?
-
-	Mat.c      = [100 0.01];
-	Mat.nu     = 0.0;
-	Mat.E      = Mat.c(1);
+	Mat.c      = [0.01 100];
+	Mat.cexp   = [1 0];
+	Mat.E      = Mat.c(2);
+    Mat.nu     = 0.0;
 
     %% Numerical settings
     Set.n_steps = 1;
     Set.time_incr = 30;
     Set.save_freq = 1;
+% 	Set.dt = 0.1;
 	
 	Set.plot_stress = true;
+
     fname = dbstack;
 	Set.name = fname.name;
 end

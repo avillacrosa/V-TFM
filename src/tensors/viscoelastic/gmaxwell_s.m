@@ -1,30 +1,33 @@
-function [s, se, Q] = gmaxwell_s(k, x_t, X, s_t, se_t, Q_t, z, Mat, Set)
+function [s, Int] = gmaxwell_s(k, e, gp, x_t, X, s_t, z, Mat, Set, Int)
 	Fd   = deformF(x_t(:,:,k+1), X, z); J = det(Fd);
-	s	= stress_elast(k+1, x_t, X, z, Mat);
+	se	= stress_elast(k+1, x_t, X, z, Mat);
 
-	Q = zeros(size(s,1), size(s,2), Mat.ve_elems);
-	Qtot = zeros(size(s));
+	Q = zeros(size(se,1), size(se,2), Mat.ve_elems);
+	Qtot = zeros(size(se));
 	if strcmpi(Mat.elast,"hookean")
-		se = s;
 		for a = 1:Mat.ve_elems
-			tau    = Mat.visco(a)/Mat.Ea(a);
+			tau    = Mat.c(a,2)/Mat.c(a,1);
 			xi     = -Set.dt/(2*tau);	
-			H      = exp(xi)*(exp(xi)*ref_mat(Q_t(:,a,:,:,k))-ref_mat(se_t(:,:,:,k)));
-			Q(:,:,a)   = exp(xi)*s+H;
+			H      = exp(xi)*(exp(xi)*ref_mat(Int.Q_t(:,a,e,gp,k))-ref_mat(Int.se_t(:,e,gp,k)));
+			Q(:,:,a)   = exp(xi)*se+H;
 			Qtot   = Qtot + Q(:,:,a);
+
+			Int.Q_t(:,a,e,gp,k+1) = vec_mat(Q(:,:,a));
 		end
-		s = s + Qtot;
+		s = se + Qtot;
+		Int.se_t(:,e,gp,k+1) = vec_mat(se);
 	else
-		S   = J*inv(Fd)*s*inv(Fd');
-		se  = S;
+		Se   = J*inv(Fd)*se*inv(Fd');
 		for a = 1:Mat.ve_elems
-			tau    = Mat.visco(a)/Mat.Ea(a);
+			tau    = Mat.c(a,2)/Mat.c(a,1);
 			xi     = -Set.dt/(2*tau);	
-			H      = exp(xi)*(exp(xi)*ref_mat(Q_t(:,a,:,:,k))-ref_mat(se_t(:,:,:,k)));
-			Q(:,:,a)   = exp(xi)*S+H;
+			H      = exp(xi)*(exp(xi)*ref_mat(Int.Q_t(:,a,e,gp,k))-ref_mat(Int.Se_t(:,e,gp,k)));
+			Q(:,:,a)   = exp(xi)*Se+H;
 			Qtot   = Qtot + Q(:,:,a);
+			Int.Q_t(:,:,e,gp,k+1) = vec_mat(Q(:,:,a));
 		end
-		S = S + Qtot;
+		S = Se + Qtot;
 		s = Fd*S*Fd'/J;
+		Int.Se_t(:,e,gp,k+1) = vec_mat(Se);
 	end
 end

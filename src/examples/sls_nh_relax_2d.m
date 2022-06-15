@@ -10,14 +10,14 @@ function [Geo, Mat, Set] = sls_nh_relax_2d(Geo, Mat, Set)
     % Possible types = hookean, neohookean, venant
     Mat.model  = 'gmaxwell'; % Merge these two?
     Mat.elast  = 'neohookean'; % Merge these two?
-    Mat.E     = 100;
-	Mat.Ea    = 100;
-    Mat.nu    = 0.3; % No off diagonal terms in D matrix
-    Mat.visco = 0.01;
+    Mat.E      = 100;
+    Mat.nu     = 0.3;
+	Mat.c      = [100 0.01];
+	Mat.cexp   = [0 1];
 
     %% Numerical settings
     Set.n_steps = 1;
-    Set.time_incr = 20;
+    Set.time_incr = 100;
     Set.save_freq = 1;
 	
 	Set.plot_stress = true;

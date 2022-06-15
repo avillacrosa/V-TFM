@@ -1,6 +1,6 @@
-function c = gmaxwell_c(k, xe_t, X, Qe_t, z, Mat, Set)
+function [c, Int] = gmaxwell_c(k, e, gp, xe_t, X, z, Mat, Set, Int)
     c = ctensor_elast(xe_t(:,:,k+1), X, z, Mat);
-	tau = Mat.visco/Mat.E;
+	tau = Mat.c(2)/Mat.c(1);
 	xi = -Set.dt/(2*tau);
 	c = c*(1+exp(xi));
 end

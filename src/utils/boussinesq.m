@@ -1,4 +1,4 @@
-function t_bs = runBoussinesq(Geo, Mat)
+function t_bs = boussinesq(Geo, Mat)
     [~, top_idx] = ext_z(0, Geo);
     ux = Geo.u(top_idx, 1);
     ux = reshape(ux, [Geo.ns(1), Geo.ns(2)]);

@@ -10,8 +10,8 @@ function [Geo, Mat, Set] = hk_u_2d(Geo, Mat, Set)
     % Possible types = hookean, neohookean, venant
     Mat.model  = 'elastic'; % Merge these two?
 	Mat.elast  = 'hookean';
-    Mat.E      = 100;
-    Mat.nu     = 0.3; % No off diagonal terms in D matrix
+	Mat.E    = 100;
+    Mat.nu   = 0.3;
 
     %% Numerical settings
     Set.time_incr = 10;

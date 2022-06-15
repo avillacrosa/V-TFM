@@ -12,9 +12,9 @@ function [Geo, Mat, Set] = mx_ve_flow_2d(Geo, Mat, Set)
     Mat.model  = 'maxwell'; % Merge these two?
     Mat.elast  = 'venant'; % Merge these two?
 	
-    Mat.E     = 100;
-    Mat.nu    = 0.3; % No off diagonal terms in D matrix
-    Mat.visco = 1;
+	Mat.c      = [100 1];
+	Mat.nu     = 0.3;
+	Mat.E      = Mat.c(1);
 
     %% Numerical settings
     Set.n_steps = 1;

@@ -3,6 +3,9 @@
 % for example)
 %--------------------------------------------------------------------------
 function vecA = vec_mat(A, fact)
+	if (~exist('fact', 'var'))
+		fact = 1;
+	end
     d = size(A,1);
     vecA = zeros(d*(d+1)/2, size(A,3));
     for i = 1:size(A,3)

@@ -39,6 +39,6 @@ function [Geo, Mat, Set, Result] = initializeData(Geo, Mat, Set)
 	if Set.output
 		Set    = initializeOutFolder(Set);
 	end
-	Mat.ve_elems = max([length(Mat.Ea), 1]);
+	Mat.ve_elems = max([size(Mat.c, 1), 1]);
     Result = initializeOutData(Geo, Mat, Set);
 end

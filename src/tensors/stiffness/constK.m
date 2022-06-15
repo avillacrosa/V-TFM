@@ -1,4 +1,4 @@
-function K = constK(k, x_t, Q_t, Geo, Mat, Set)
+function [K, Int] = constK(k, x_t, Geo, Mat, Set, Int)
     x_t = ref_nvec(x_t, Geo.n_nodes, Geo.dim);
     Kg1 = Geo.Kg1; Kg2 = Geo.Kg2;
     if Set.sparse
@@ -18,9 +18,9 @@ function K = constK(k, x_t, Q_t, Geo, Mat, Set)
 		if strcmpi(Mat.elast, 'hookean') && e == 1
 			 Xe_t = xe;
 			 Xe_t(:,:,k+Set.dk) = Xe;
-			 Ke = constKe(k, Xe_t, Xe, Q_t(:,:,e,:,:), Geo, Mat, Set);
+			 [Ke, Int] = constKe(k, e, Xe_t, Xe, Geo, Mat, Set, Int);
 		elseif ~strcmpi(Mat.elast, 'hookean')
-			 Ke = constKe(k, xe, Xe, Q_t(:,:,e,:,:), Geo, Mat, Set);
+			 [Ke, Int] = constKe(k, e, xe, Xe, Geo, Mat, Set, Int);
 		end
         if Set.sparse
             for aa = 1:size(Ke,1)
