@@ -4,17 +4,18 @@ function [s, Int] = maxwell_s(k, e, gp, x_t, X, s_t, z, Mat, Set, Int)
 	E = Mat.c(1);
 	nu = Mat.c(2);
 	tau	= nu/E;
-	xi	= -Set.dt/(2*tau);	
 	if strcmpi(Mat.elast,"hookean")
-		H	= exp(xi)*(exp(xi)*ref_mat(Int.Q_t(:,1,e,gp,k))-ref_mat(Int.se_t(:,e,gp,k)));
-		Q	= exp(xi)*se+H;
+% 			fact = (1-Set.dt/tau); % FORWARD
+		fact = (tau/(tau+Set.dt)); % BACKWARD
+		Q = (se-ref_mat(Int.se_t(:,e,gp,k))+ref_mat(Int.Q_t(:,1,e,gp,k)))*fact;
 		s   = Q;
 		Int.se_t(:,e,gp,k+1) = vec_mat(se);
 		Int.Q_t(:,:,e,gp,k+1) = vec_mat(Q);
 	else
 		Se  = J*inv(Fd)*se*inv(Fd');
-		H	= exp(xi)*(exp(xi)*ref_mat(Int.Q_t(:,1,e,gp,k))-ref_mat(Int.Se_t(:,e,gp,k)));
-		Q	= exp(xi)*Se+H;
+% 			fact = (1-Set.dt/tau); % FORWARD
+		fact = (tau/(tau+Set.dt)); % BACKWARD
+		Q = (Se-ref_mat(Int.Se_t(:,e,gp,k))+ref_mat(Int.Q_t(:,1,e,gp,k)))*fact;
 		S	= Q;
 		s   = Fd*S*Fd'/J;
 		Int.Se_t(:,e,gp,k+1) = vec_mat(Se);

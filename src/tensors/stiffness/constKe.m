@@ -1,9 +1,9 @@
-function [Ke, Int] = constKe(k, e, xe, Xe, Geo, Mat, Set, Int)
+function Ke = constKe(k, xe, Xe, Geo, Mat, Set)
     Ke  = zeros(Geo.n_nodes_elem*Geo.dim, Geo.n_nodes_elem*Geo.dim);
     for gp = 1:size(Set.gaussPoints,1)
         z = Set.gaussPoints(gp,:);
 		
-		[c, Int] = ctensor(k, e, gp, xe, Xe, z, Mat, Set, Int);
+		c = ctensor(k, xe, Xe, z, Mat, Set);
     	D = constD(c);
         
         [dNdx, J] = getdNdx(xe(:,:,k+Set.dk), z, Geo.n_nodes_elem);

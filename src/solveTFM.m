@@ -9,7 +9,7 @@ function Result = solveTFM(Geo, Mat, Set, Result)
 	Int.Q_t		= zeros(Geo.vect_dim, Mat.ve_elems, Geo.n_elem, Geo.n_nodes_elem, Set.time_incr);
 	Int.se_t	= zeros(Geo.vect_dim, Geo.n_elem, Geo.n_nodes_elem, Set.time_incr);
 	Int.Se_t	= zeros(Geo.vect_dim, Geo.n_elem, Geo.n_nodes_elem, Set.time_incr);
-	Int.c_t		= zeros(Geo.dim, Geo.dim, Geo.dim, Geo.dim, Geo.n_elem, Geo.n_nodes_elem, Set.time_incr);
+	Int.ce_t		= zeros(Geo.dim, Geo.dim, Geo.dim, Geo.dim, Geo.n_elem, Geo.n_nodes_elem, Set.time_incr);
 
 	t = 0;
 	for k = 1:Set.time_incr-Set.dk

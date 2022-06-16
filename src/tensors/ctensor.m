@@ -1,12 +1,11 @@
-function [c, Int] = ctensor(k, e, gp, xe_t, X, z, Mat, Set, Int)
+function c = ctensor(k, xe_t, X, z, Mat, Set)
 	switch lower(Mat.model)
 		case 'maxwell'
-% 			[c, Int]  = maxwell_c(k, e, gp, xe_t, X, z, Mat, Set, Int);
-			[c, Int]  = maxwell_c_bf(k, e, gp, xe_t, X, z, Mat, Set, Int);
+			c  = maxwell_c(k, xe_t, X, z, Mat, Set);
 		case 'fmaxwell'
-			[c, Int]  = fmaxwell_c(k, e, gp, xe_t, X, z, Mat, Set, Int);
+			c  = fmaxwell_c(k, xe_t, X, z, Mat, Set);
 		case 'gmaxwell'
-			[c, Int]  = gmaxwell_c(k, e, gp, xe_t, X, z, Mat, Set, Int);
+			c  = gmaxwell_c(k, xe_t, X, z, Mat, Set);
 		case 'elastic'
 			c  = ctensor_elast(xe_t, X, z, Mat);
 	end

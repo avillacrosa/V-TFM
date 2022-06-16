@@ -9,8 +9,8 @@ function [u_t, s_t, Int] = newton(k, u_t, s_t, R, F_t, Geo, Mat, Set, Int)
     X   = vec_nvec(Geo.X);
 	x_t = X + u_t;
 	while(tol > Set.newton_tol)
-		[K_c, Int]	= constK(k, x_t, Geo, Mat, Set, Int);        
-		K_s			= stressK(k, x_t, s_t, Geo, Mat, Set, Int); 
+		K_c	= constK(k, x_t, Geo, Mat, Set);        
+		K_s	= stressK(k, x_t, s_t, Geo, Mat, Set, Int); 
 		K   = K_c + K_s;
 
 		du = K(dof, dof)\(-R(dof));

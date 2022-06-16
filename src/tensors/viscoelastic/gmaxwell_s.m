@@ -7,22 +7,21 @@ function [s, Int] = gmaxwell_s(k, e, gp, x_t, X, s_t, z, Mat, Set, Int)
 	if strcmpi(Mat.elast,"hookean")
 		for a = 1:Mat.ve_elems
 			tau    = Mat.c(a,2)/Mat.c(a,1);
-			xi     = -Set.dt/(2*tau);	
-			H      = exp(xi)*(exp(xi)*ref_mat(Int.Q_t(:,a,e,gp,k))-ref_mat(Int.se_t(:,e,gp,k)));
-			Q(:,:,a)   = exp(xi)*se+H;
+% 			fact = (1-Set.dt/tau); % FORWARD
+			fact = (tau/(tau+Set.dt)); % BACKWARD
+			Q(:,:,a) = (se-ref_mat(Int.se_t(:,e,gp,k))+ref_mat(Int.Q_t(:,1,e,gp,k)))*fact;
 			Qtot   = Qtot + Q(:,:,a);
-
 			Int.Q_t(:,a,e,gp,k+1) = vec_mat(Q(:,:,a));
 		end
-		s = se + Qtot;
 		Int.se_t(:,e,gp,k+1) = vec_mat(se);
+		s = se + Qtot;
 	else
 		Se   = J*inv(Fd)*se*inv(Fd');
 		for a = 1:Mat.ve_elems
 			tau    = Mat.c(a,2)/Mat.c(a,1);
-			xi     = -Set.dt/(2*tau);	
-			H      = exp(xi)*(exp(xi)*ref_mat(Int.Q_t(:,a,e,gp,k))-ref_mat(Int.Se_t(:,e,gp,k)));
-			Q(:,:,a)   = exp(xi)*Se+H;
+			% 			fact = (1-Set.dt/tau); % FORWARD
+			fact = (tau/(tau+Set.dt)); % BACKWARD
+			Q(:,:,a)   =(Se-ref_mat(Int.Se_t(:,e,gp,k))+ref_mat(Int.Q_t(:,1,e,gp,k)))*fact;
 			Qtot   = Qtot + Q(:,:,a);
 			Int.Q_t(:,:,e,gp,k+1) = vec_mat(Q(:,:,a));
 		end
