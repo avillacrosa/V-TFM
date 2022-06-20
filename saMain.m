@@ -20,8 +20,12 @@ addpath(genpath('src'))
 % [Geo, Mat, Set] = sls_nh_flow_2d;			% OK
 
 % [Geo, Mat, Set] = fmx_hk_relax_2d;		% OK
-[Geo, Mat, Set] = fmx_hk_flow_2d;			% OK
+% [Geo, Mat, Set] = fmx_hk_flow_2d;			% OK
 
+[Geo, Mat, Set] = nano_test;			% 
 
 Result = runTFM(Geo, Mat, Set);
+plot(Result.uz, Result.Tz)
+xlabel('u')
+ylabel('T')
 

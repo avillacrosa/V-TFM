@@ -14,4 +14,8 @@ function Result = initializeOutData(Geo, Mat, Set)
     Result.dof      = Geo.dof;
     Result.fix      = Geo.fix;
     Result.time     = zeros(1, n_saves);
+	if Set.nano
+		Result.Tz   = zeros(n_saves,1);
+		Result.uz   = zeros(n_saves,1);
+	end
 end

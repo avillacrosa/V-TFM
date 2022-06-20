@@ -1,6 +1,6 @@
 function plotResults(Geo, Mat, Set, Result)
 	if Geo.dim == 2
-		femplot(Geo.X,Result.x(:,:,end),Geo.n)
+		femplot(Result.x(:,:,end), Geo, Mat, Set);
 	end
 	if Set.plot_stress && ~strcmpi(Mat.model,'elastic')
 		if Geo.dim == 2
