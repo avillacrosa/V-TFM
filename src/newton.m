@@ -13,11 +13,6 @@ function [x_t, s_t, Geo, Int] = newton(k, x_t, s_t, R, F_t, Geo, Mat, Set, Int)
 
 		du = K(dof, dof)\(-R(dof));
 		x_t(dof,k+Set.dk) = x_t(dof,k+Set.dk) + du;
-% 		x_t = updateDirichlet(k, x_t, Geo, Mat, Set);
-% 		xtv = ref_nvec(x_t(:,k+Set.dk), Geo.n_nodes, Geo.dim);
-% 		xtv(:,1) = xtv(:,1)-Set.r0(1);
-% 		xtv(:,2) = xtv(:,2)-Set.r0(2);
-% 		sum(vecnorm(xtv,2,2) < (Set.r-1e-5))
 		[T, s_t, Int] = internalF(k, x_t, s_t, Geo, Mat, Set, Int);
 		R = T - F_t(:,k+Set.dk);
 		tol = norm(R(dof))/Geo.x_units;

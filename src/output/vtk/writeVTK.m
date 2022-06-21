@@ -15,7 +15,7 @@ function writeVTK(Geo, x, u, F, T, t, stress, fname)
     F_str        = writeVec(F, 'Loads');
     T_str        = writeVec(T, 'Reactions');
     t_str        = writeVec(t, 'Tractions');
-    stress_str   = writeStressRec(stress);
+    s_str		 = writeStressRec(stress);
     
     fprintf(fileH, header);
     fprintf(fileH, geo_str);
@@ -23,7 +23,7 @@ function writeVTK(Geo, x, u, F, T, t, stress, fname)
     fprintf(fileH, F_str);
     fprintf(fileH, T_str);
     fprintf(fileH, t_str);
-    fprintf(fileH, stress_str);
+    fprintf(fileH, s_str);
 
     fclose(fileH);
 end

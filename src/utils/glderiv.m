@@ -12,7 +12,7 @@ function gl = glderiv(f, k, dt, rho, j0, cutoff)
     for j = 1:k 
 % 		fprintf("k: %d k-j+1: %d\n", k, k-j+1);
         if j >= j0
-            gl = gl + lambda*f(dims{:},k-j+1);
+            gl = gl + double(lambda).*f(dims{:},k-j+1);
         end
         lambda = lambda*(j-1-rho)/j;
 		if j > cutoff

@@ -11,6 +11,7 @@ function K = stressK(k, x, s_t, Geo, Mat, Set, Int)
 		K   = zeros(Geo.n_nodes*Geo.dim);
 	end
 	if strcmpi(Mat.elast, 'hookean')
+		K = zeros(Geo.n_nodes*Geo.dim);
 		return
 	end
 	for e = 1:Geo.n_elem

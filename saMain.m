@@ -22,7 +22,10 @@ addpath(genpath('src'))
 % [Geo, Mat, Set] = fmx_hk_relax_2d;		% OK
 % [Geo, Mat, Set] = fmx_hk_flow_2d;			% OK
 
-[Geo, Mat, Set] = nano_test;			% 
+% [Geo, Mat, Set] = nano_hk_2d;				% OK
+[Geo, Mat, Set] = nano_hk_3d;				% OK
+
+% [Geo, Mat, Set] = nano_fmx_3d;				% OK
 
 Result = runTFM(Geo, Mat, Set);
 plot(Result.uz, Result.Tz)
