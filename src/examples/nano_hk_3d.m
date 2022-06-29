@@ -1,11 +1,8 @@
 function [Geo, Mat, Set] = nano_hk_3d(Geo, Mat, Set)
     %% Geometry parameters
     % Number of nodes in each direction
-%     Geo.ns = [50 50 3];
-%     Geo.ds = [1/49 1/49 1/15];
-
-    Geo.ns = [10 10 3];
-    Geo.ds = [1/9 1/9 1/15];
+    Geo.ns = [50 50 3];
+    Geo.ds = [1/49 1/49 1/15];
 
 	Geo.uBC = [3 0 1 0; 3 0 2 0; 3 0 3 0;
 			   2 0 1 0; 2 0 2 0;

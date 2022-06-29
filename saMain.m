@@ -19,8 +19,6 @@ addpath(genpath('src'))
 % [Geo, Mat, Set] = sls_nh_relax_2d;		% OK
 % [Geo, Mat, Set] = sls_nh_flow_2d;			% OK
 
-% [Geo, Mat, Set] = sls_nh_relax_3d;		% OK
-
 % [Geo, Mat, Set] = fmx_hk_relax_2d;		% OK
 % [Geo, Mat, Set] = fmx_hk_flow_2d;			% OK
 

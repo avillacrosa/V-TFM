@@ -13,8 +13,8 @@ function Result = solveTFM(Geo, Mat, Set, Result)
 	t = 0;
 	Geo.fixR = zeros(Geo.n_nodes, Set.time_incr);
 	for k = 1:Set.time_incr-Set.dk
-        [Q, Geo, Set] = updateDOFsQ(k, x_t, Geo, Mat, Set);
-
+		[Geo, Set] = updateDOFs(k, x_t, Geo, Mat, Set);
+		x_t = updateDirichlet(k, x_t, Geo, Mat, Set);
         [T, ~, ~] = internalF(k, x_t, s_t, Geo, Mat, Set, Int);
     	R = T - F_t(:,k+Set.dk);
     	[x_t, s_t, Geo, Int] = newton(k, x_t, s_t, R, F_t, Geo, Mat, Set, Int);
