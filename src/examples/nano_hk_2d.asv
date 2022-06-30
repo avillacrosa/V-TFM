@@ -8,10 +8,9 @@ function [Geo, Mat, Set] = nano_hk_2d(Geo, Mat, Set)
     Geo.ns = [n n 1];
     Geo.ds = [1/(n-1) 1/(n-1) 1];
 
-    Geo.uBC = [2 0 2 0; 2 0 1 0; % BOTTOM
-			   1 1 1 0; 1 1 2 0; % RIGHT
-		       1 0 1 0; 1 0 2 0; % LEFT
-			   ];
+    Geo.uBC = [1 0 1 0; 2 0 2 0; % BOTTOM
+		       1 1 1 0; 1 1 2 0; 
+			   2 0 1 0; 2 0 2 0;];
     
     %% Material parameters
     % Possible types = hookean, neohookean, venant
@@ -29,7 +28,7 @@ function [Geo, Mat, Set] = nano_hk_2d(Geo, Mat, Set)
 	Set.dt   = 1;
 	
 	Set.time_incr = -2*(Set.h/Set.v)/Set.dt;
-	Set.time_incr = int8(Set.time_incr)+1;
+	Set.time_incr = int8(Set.time_incr);
 
     fname = dbstack;
 	Set.name = fname.name;

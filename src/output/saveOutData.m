@@ -10,7 +10,8 @@ function Result = saveOutData(t, c, k, x, s_t, F, T, M, Geo, Mat, Set, Result)
 		Result.t(:,:,c)      = M \ Result.T(:,:,c);
 		Result.t_top(:,:,c)  = Result.t(top_idx,:,c);
 		if Set.nano
-			Result.Tz(c) = -sum(Result.T(logical(Geo.fixR(:,k)),end,c));
+			T = Result.T(:,:,c);
+			Result.Tz(c) = -sum(T(Geo.fixR(:,:,k)));
 			Result.uz(c) = max(Geo.X(:,end))+Set.r-Set.r0(end);
 		end
 		% TODO FIXME add tbssnsq here? 

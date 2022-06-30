@@ -11,14 +11,18 @@ function Result = solveTFM(Geo, Mat, Set, Result)
 	Int.Se_t	= zeros(Geo.vect_dim, Geo.n_elem, Geo.n_nodes_elem, Set.time_incr);
 
 	t = 0;
-	Geo.fixR = zeros(Geo.n_nodes, Set.time_incr);
+	Geo.fixR = false(Geo.n_nodes, Geo.dim, Set.time_incr);
 	for k = 1:Set.time_incr-Set.dk
-        [Q, Geo, Set] = updateDOFsQ(k, x_t, Geo, Mat, Set);
-
+		if Set.nano
+			Set.r0(end) = Set.r0(end)+Set.v*Set.dt;
+        	[~, Geo, Set] = updateDOFsQ(k, x_t, Geo, Mat, Set);
+			x_t = updateDirichletQ(k, x_t, Geo, Mat, Set);
+		end
         [T, ~, ~] = internalF(k, x_t, s_t, Geo, Mat, Set, Int);
     	R = T - F_t(:,k+Set.dk);
     	[x_t, s_t, Geo, Int] = newton(k, x_t, s_t, R, F_t, Geo, Mat, Set, Int);
-
+% 		easyplot(k, x_t, Geo, Mat, Set);
+% 		close all;
 		if mod(k, Set.save_freq) == 0
 			c = k/Set.save_freq + 1; % This goes to 1 more than k, is it good?
 			Result = saveOutData(t, c, k, x_t, s_t, F_t, T, M, Geo, Mat, Set, Result);
@@ -31,5 +35,9 @@ function Result = solveTFM(Geo, Mat, Set, Result)
 			fprintf(") \n")
 		end
         t = t + Set.dt;
+		if (Set.r0(end)-Set.r) <= (max(Geo.X(:,end))-Set.h)
+			Set.v = -Set.v;
+			Geo.fixR(:,:,(k+1):(2*k-1)) = flip(Geo.fixR(:,:,1:k-1), 3);
+		end
 	end
 end

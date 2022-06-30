@@ -38,6 +38,5 @@ function [Geo, Mat, Set] = nano_hk_3d(Geo, Mat, Set)
 	Set.time_incr = -2*(Set.h/Set.v)/Set.dt;
 	Set.time_incr = int8(Set.time_incr);
 
-    fname = dbstack;
-	Set.name = fname.name;
+	Set.name = 'nano3D';
 end

@@ -7,6 +7,7 @@ function c = ctensor(k, xe_t, X, z, Mat, Set)
 		case 'gmaxwell'
 			c  = gmaxwell_c(k, xe_t, X, z, Mat, Set);
 		case 'elastic'
-			c  = ctensor_elast(xe_t, X, z, Mat);
+			xe = xe_t(:,:,k);
+			c  = ctensor_elast(xe, X, z, Mat);
 	end
 end			
