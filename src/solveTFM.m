@@ -13,11 +13,9 @@ function Result = solveTFM(Geo, Mat, Set, Result)
 	t = 0;
 	Geo.fixR = false(Geo.n_nodes, Geo.dim, Set.time_incr);
 	for k = 1:Set.time_incr-Set.dk
-		if Set.nano
-			Set.r0(end) = Set.r0(end)+Set.v*Set.dt;
-        	[~, Geo, Set] = updateDOFsQ(k, x_t, Geo, Mat, Set);
-			x_t = updateDirichletQ(k, x_t, Geo, Mat, Set);
-		end
+    	[Geo, Set]  = updateDOFs(k, x_t, Geo, Mat, Set);
+		[~, x_t]	= updateDirichlet(k, x_t, Geo, Mat, Set);
+
         [T, ~, ~] = internalF(k, x_t, s_t, Geo, Mat, Set, Int);
     	R = T - F_t(:,k+Set.dk);
     	[x_t, s_t, Geo, Int] = newton(k, x_t, s_t, R, F_t, Geo, Mat, Set, Int);
@@ -35,9 +33,5 @@ function Result = solveTFM(Geo, Mat, Set, Result)
 			fprintf(") \n")
 		end
         t = t + Set.dt;
-		if (Set.r0(end)-Set.r) <= (max(Geo.X(:,end))-Set.h)
-			Set.v = -Set.v;
-			Geo.fixR(:,:,(k+1):(2*k-1)) = flip(Geo.fixR(:,:,1:k-1), 3);
-		end
 	end
 end

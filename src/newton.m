@@ -3,11 +3,8 @@
 %--------------------------------------------------------------------------
 function [x_t, s_t, Geo, Int] = newton(k, x_t, s_t, R, F_t, Geo, Mat, Set, Int)
 	dof = vec_nvec(Geo.dof);
-	if Set.nano
-    	[Q, ~, ~] = updateDOFsQ(k, x_t, Geo, Mat, Set);
-% 		R = Q'*R;
-	end
     tol = norm(R(dof))/Geo.x_units;
+	[Q, x_t]	= updateDirichlet(k, x_t, Geo, Mat, Set);
 
     it  = 1;
 	while(tol > Set.newton_tol)
@@ -19,14 +16,12 @@ function [x_t, s_t, Geo, Int] = newton(k, x_t, s_t, R, F_t, Geo, Mat, Set, Int)
 
 		du = K(dof, dof)\(-R(dof));
 		x_t(dof,k+Set.dk) = x_t(dof,k+Set.dk) + du;
-		x_t = updateDirichletQ(k, x_t, Geo, Mat, Set);
 
-		[Q, ~, ~] = updateDOFsQ(k, x_t, Geo, Mat, Set);
+		[Q, x_t]	= updateDirichlet(k, x_t, Geo, Mat, Set);
 
 		[T, s_t, Int] = internalF(k, x_t, s_t, Geo, Mat, Set, Int);
 		R = T - F_t(:,k+Set.dk);
 
-% 		R = Q'*R;
 		tol = norm(R(dof))/Geo.x_units;
 		
 		fprintf('ITER = %i, tolR = %e, tolX = %e\n', it,tol,norm(du)/Geo.x_units);
