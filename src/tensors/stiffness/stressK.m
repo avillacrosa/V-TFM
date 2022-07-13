@@ -7,12 +7,15 @@ function K = stressK(k, x, s_t, Geo, Mat, Set, Int)
 		K_id2 = zeros(ll^2*Geo.n_elem,1);
 		K = zeros(ll^2*Geo.n_elem,1);
 		c = 1;
+		if strcmpi(Mat.elast, 'hookean')
+			K = sparse(Geo.n_nodes*Geo.dim, Geo.n_nodes*Geo.dim);
+			return
+		end 
 	else
 		K   = zeros(Geo.n_nodes*Geo.dim);
-	end
-	if strcmpi(Mat.elast, 'hookean')
-		K = zeros(Geo.n_nodes*Geo.dim);
-		return
+		if strcmpi(Mat.elast, 'hookean')
+			return
+		end
 	end
 	for e = 1:Geo.n_elem
 		ne = Geo.n(e,:);

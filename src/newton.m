@@ -28,7 +28,3 @@ function [x_t, s_t, Geo, Int] = newton(k, x_t, s_t, R, F_t, Geo, Mat, Set, Int)
 		it = it + 1;
 	end
 end
-
-% 		x_v = ref_nvec(x_t(:,k), Geo.n_nodes, Geo.dim);
-% 		x_v(Geo.fixR(:,:,k))
-		

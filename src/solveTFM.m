@@ -19,8 +19,7 @@ function Result = solveTFM(Geo, Mat, Set, Result)
         [T, ~, ~] = internalF(k, x_t, s_t, Geo, Mat, Set, Int);
     	R = T - F_t(:,k+Set.dk);
     	[x_t, s_t, Geo, Int] = newton(k, x_t, s_t, R, F_t, Geo, Mat, Set, Int);
-% 		easyplot(k, x_t, Geo, Mat, Set);
-% 		close all;
+		
 		if mod(k, Set.save_freq) == 0
 			c = k/Set.save_freq + 1; % This goes to 1 more than k, is it good?
 			Result = saveOutData(t, c, k, x_t, s_t, F_t, T, M, Geo, Mat, Set, Result);

@@ -1,4 +1,5 @@
 function [Q, x_t] = updateDirichlet(k, x_t, Geo, Mat, Set)
+	Q = speye(Geo.n_nodes*Geo.dim);
 	if Set.nano
 		fullIdx = find(vec_nvec(Geo.fixR(:,:,k)));
     	Q = eye(Geo.n_nodes*Geo.dim);

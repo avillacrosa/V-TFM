@@ -30,9 +30,4 @@ addpath(genpath('src'))
 % [Geo, Mat, Set] = nano_fmx_3d;				% OK
 
 Result = runTFM(Geo, Mat, Set);
-hold off
-figure
-plot(Result.uz, Result.Tz)
-xlabel('u')
-ylabel('T')
 
