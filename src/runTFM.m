@@ -10,7 +10,13 @@ function Result = runTFM(Geo, Mat, Set)
 
 	%% Solve the system
     writeOut(1,Geo,Set,Result);
-    Result = solveTFM(Geo, Mat, Set, Result);
+	if Set.Boussinesq
+		fprintf("> Using Boussinesq solver\n")
+		Result = inverseBSSNSQ(Geo, Mat, Set, Result);
+	else
+		fprintf("> Using FEM solver\n")
+		Result = solveTFM(Geo, Mat, Set, Result);
+	end
 
 	%% Save the simulation info and exit
     if Set.output

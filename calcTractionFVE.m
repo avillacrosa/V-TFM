@@ -22,7 +22,7 @@ function [emax, n, p, settings, tmax]=calcTractionFVE(emax, n, p, settings, tmax
      
             %start filter
             if settings.filterdisps~=0
-                cd(p.FIG);
+                addpath(p.FIG);
                 dispmags=sqrt(dfieldx(:,:,it).^2+dfieldy(:,:,it).^2);
                 [iqr_mid_disp,iqr_range_disp,iqr_epts_disp,iqr_whisks_disp]=boxplotvals(dispmags(:));
                 dispmags_upbound(1)=iqr_whisks_disp(2);%upper whisker
@@ -34,13 +34,16 @@ function [emax, n, p, settings, tmax]=calcTractionFVE(emax, n, p, settings, tmax
                 nfmags=sqrt(nfux(:).^2+nfuy(:).^2);
                 nfux(nfmags>dispmags_upbound(settings.filterdisps))=NaN;%filter displacements
                 nfuy(nfmags>dispmags_upbound(settings.filterdisps))=NaN;%filter displacements
-                cd(p.PIVlab);
+				rmpath(p.FIG);
+                addpath(p.PIVlab);
                 ux=inpaint_nans_PIVLAB(nfux,1);
                 uy=inpaint_nans_PIVLAB(nfuy,1);
+                addpath(p.PIVlab);
             else                
-                cd(p.PIVlab);
+                addpath(p.PIVlab);
                 ux=inpaint_nans_PIVLAB(squeeze(dfieldx(:,:,it)),1);%inpaint nans occurring from PIV
                 uy=inpaint_nans_PIVLAB(squeeze(dfieldy(:,:,it)),1);
+                rmpath(p.PIVlab);
             end
             
             if settings.purgedispdrift~=0
@@ -60,7 +63,8 @@ function [emax, n, p, settings, tmax]=calcTractionFVE(emax, n, p, settings, tmax
 			uy_t(:,:,it) = uy_in_metres;
         end
         save('synthShrine')
-        [tx_t, ty_t] = shrineRunVE(settings.tInt, settings.E(n.conditions.c2e(e),n.dates.d2e(e)),settings.nu,settings.d(e),settings.H,ux_t,uy_t, tmax(e), settings);
+%         [tx_t, ty_t] = shrineRunTFM(settings.tInt, settings.E(n.conditions.c2e(e),n.dates.d2e(e)),settings.nu,settings.d(e),settings.H,ux_t,uy_t, tmax(e), settings);
+        [tx_t, ty_t] = shrineRunTFM(settings.tInt, settings.E,settings.nu,settings.d,settings.H,ux_t,uy_t,tmax(e));
         for it=1:tmax(e)
 			tx = tx_t(:,:,it);
 			ty = ty_t(:,:,it);
@@ -77,7 +81,7 @@ function [emax, n, p, settings, tmax]=calcTractionFVE(emax, n, p, settings, tmax
             disptrac_t(:,4)=uy_in_metres(:);
             disptrac_t(:,5)=tx(:);
             disptrac_t(:,6)=ty(:);
-            save(fullfile(p.files.pivdisptrac{e},n.files.filtdisptrac{e,it}),'disptrac_t','-ascii');
+%             save(fullfile(p.files.pivdisptrac{e},n.files.filtdisptrac{e,it}),'disptrac_t','-ascii');
 		end
 	end
 end

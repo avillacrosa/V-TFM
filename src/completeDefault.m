@@ -40,6 +40,7 @@ function  [Geo, Mat, Set] = completeDefault(Geo, Mat, Set)
 	DefSet.plot_strain   = false;
 	DefSet.plot_stress   = false;
 	DefSet.nano          = false;
+	DefSet.Boussinesq    = false;
     
     Geo  = addDefault(Geo, DefGeo);
     Mat  = addDefault(Mat, DefMat);

@@ -3,6 +3,8 @@ function Set = initializeOutFolder(Set)
     Set.VTKDirOutput=fullfile(Set.DirOutput, 'VTKOut');
     Set.TFMDirDisp=fullfile(Set.DirOutput, 'TFM','Displacements');
     Set.TFMDirTrac=fullfile(Set.DirOutput, 'TFM','Tractions');
+    Set.TFMDir=fullfile(Set.DirOutput, 'TFM');
+
     if exist(Set.DirOutput, 'dir')
 % 		dlt=input('Remove everything from output directory?[y]');
 		dlt='y';
@@ -20,6 +22,7 @@ function Set = initializeOutFolder(Set)
     end
 
     mkdir(Set.VTKDirOutput)
-    mkdir(Set.TFMDirDisp)
-    mkdir(Set.TFMDirTrac)
+%     mkdir(Set.TFMDirDisp)
+%     mkdir(Set.TFMDirTrac) 
+	mkdir(Set.TFMDir)
 end
