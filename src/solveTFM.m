@@ -14,7 +14,7 @@ function Result = solveTFM(Geo, Mat, Set, Result)
 	Geo.fixR = false(Geo.n_nodes, Geo.dim, Set.time_incr);
 	for k = 1:Set.time_incr-Set.dk
     	[Geo, Set]  = updateDOFs(k, x_t, Geo, Mat, Set);
-		[~, x_t]	= updateDirichlet(k, x_t, Geo, Mat, Set);
+		[~, ~, x_t]	= updateDirichlet(k, x_t, Geo, Mat, Set);
 
         [T, ~, ~] = internalF(k, x_t, s_t, Geo, Mat, Set, Int);
     	R = T - F_t(:,k+Set.dk);

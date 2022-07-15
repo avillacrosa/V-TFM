@@ -1,4 +1,7 @@
 function plotDisptrac(disptrac, label, fact)
+	if ~exist('fact','var')
+		fact = 1;
+	end
 	data = load(disptrac);
 	x = data(:,1)*fact;
 	y = data(:,2)*fact;
