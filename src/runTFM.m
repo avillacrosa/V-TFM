@@ -12,7 +12,7 @@ function Result = runTFM(Geo, Mat, Set)
     writeOut(1,Geo,Set,Result);
 	if Set.Boussinesq
 		fprintf("> Using Boussinesq solver\n")
-		Result = inverseBSSNSQ(Geo, Mat, Set, Result);
+		Result = boussinesq(Geo, Mat, Set, Result);
 	else
 		fprintf("> Using FEM solver\n")
 		Result = solveTFM(Geo, Mat, Set, Result);

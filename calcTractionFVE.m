@@ -56,32 +56,32 @@ function [emax, n, p, settings, tmax]=calcTractionFVE(emax, n, p, settings, tmax
                 end
             end
             
-%             cd(p.TFMlab);
+            addpath(p.TFMlab);
             ux_in_metres=ux*settings.pixelsize_in_metres;%displacements in metres to have tractions in Pascal
             uy_in_metres=uy*settings.pixelsize_in_metres;%displacements in metres to have tractions in Pascal
 			ux_t(:,:,it) = ux_in_metres;
 			uy_t(:,:,it) = uy_in_metres;
-        end
-        save('synthShrine')
-%         [tx_t, ty_t] = shrineRunTFM(settings.tInt, settings.E(n.conditions.c2e(e),n.dates.d2e(e)),settings.nu,settings.d(e),settings.H,ux_t,uy_t, tmax(e), settings);
+			rmpath(p.TFMlab);
+		end
         [tx_t, ty_t] = shrineRunTFM(settings.tInt, settings.E,settings.nu,settings.d,settings.H,ux_t,uy_t,tmax(e));
-        for it=1:tmax(e)
-			tx = tx_t(:,:,it);
-			ty = ty_t(:,:,it);
+		for it=1:tmax(e)
+    		disptrac_t=load(fullfile(p.files.pivdisptrac{e},n.files.pivdisp{e,it}),'pivmatrix','-ascii');
+			tx = tx_t(:,:,it); ux = ux_t(:,:,it);
+			ty = ty_t(:,:,it); uy = uy_t(:,:,it);
 			if settings.equiltracs~=0
-    			switch settings.equiltracs
-        			case{1}%clear resultant of traction field
-            			tx=tx-nansum(tx(:));
-            			ty=ty-nansum(ty(:));
-        			case{2}%clear resultant and moment of traction field
-                			%not implemented yet
-    			end
+				switch settings.equiltracs
+					case{1}%clear resultant of traction field
+    					tx=tx-nansum(tx(:));
+    					ty=ty-nansum(ty(:));
+					case{2}%clear resultant and moment of traction field
+        					%not implemented yet
+				end
 			end
-            disptrac_t(:,3)=ux_in_metres(:);%inpainted disps
-            disptrac_t(:,4)=uy_in_metres(:);
-            disptrac_t(:,5)=tx(:);
-            disptrac_t(:,6)=ty(:);
-%             save(fullfile(p.files.pivdisptrac{e},n.files.filtdisptrac{e,it}),'disptrac_t','-ascii');
+    		disptrac_t(:,3)=ux(:);%inpainted disps
+    		disptrac_t(:,4)=uy(:);
+    		disptrac_t(:,5)=tx(:);
+    		disptrac_t(:,6)=ty(:);
+    		save(fullfile(p.files.pivdisptrac{e},n.files.filtdisptrac{e,it}),'disptrac_t','-ascii');
 		end
 	end
 end
