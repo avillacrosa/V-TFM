@@ -26,7 +26,6 @@ function [tx_t, ty_t] = shrineRunTFM(dt, E, nu, d, h, ux, uy, nz)
     
 	Mat.E  = E; Mat.nu = nu;
 	Mat.model = 'elastic'; Mat.elast = 'hookean';
-	Mat.visco = 10;
 
 	Set.dt     = dt; Set.dt_obs = Set.dt;
 % 	Set.time_incr = size(ux,3); 
@@ -39,8 +38,8 @@ function [tx_t, ty_t] = shrineRunTFM(dt, E, nu, d, h, ux, uy, nz)
 	Result = runTFM(Geo, Mat, Set);
 
     %% Extract and return tractions
-    tx_t = zeros(Geo.ns(2), Geo.ns(1), size(ux,3));
-    ty_t = zeros(Geo.ns(2), Geo.ns(1), size(ux,3));
+    tx_t = zeros(Geo.ns(2), Geo.ns(1), size(ux,3)); % This is fine
+    ty_t = zeros(Geo.ns(2), Geo.ns(1), size(ux,3)); % This is fine
     for t = 1:Set.time_incr
         tx = vec_to_grid(Result.t_top(:,1,t), Geo)';
         ty = vec_to_grid(Result.t_top(:,2,t), Geo)';

@@ -74,11 +74,12 @@ function Result = boussinesq(Geo, Mat, Set, Result)
     		end
 		end
 		%map back to non-transformed space
-		Result.t(top_idx,1,t) = grid_to_vec(real(ifft2(tx_hat).')');
-		Result.t(top_idx,2,t) = grid_to_vec(real(ifft2(ty_hat).')');
-		Result.t_top(:,:,t)  = Result.t(top_idx,:,t);
-		Result.u(top_idx,:,t) = Geo.u(top_idx,:,t);
-		Result.x(top_idx,:,t) = Geo.X(top_idx,:) + Geo.u(top_idx,:,t);
+		Result.t(top_idx,1,t+1) = grid_to_vec(real(ifft2(tx_hat).')');
+		Result.t(top_idx,2,t+1) = grid_to_vec(real(ifft2(ty_hat).')');
+        any(isnan(Result.t(top_idx,:,t+1)))
+		Result.t_top(:,:,t+1)  = Result.t(top_idx,:,t+1);
+		Result.u(top_idx,:,t+1) = Geo.u(top_idx,:,t+1);
+		Result.x(top_idx,:,t+1) = Geo.X(top_idx,:) + Geo.u(top_idx,:,t+1);
 		% TODO FIXME, assuming no viscoelasticity here (c==t)
 		writeOut(t,Geo,Set,Result);
 
