@@ -21,7 +21,7 @@ function Result = solveTFM(Geo, Mat, Set, Result)
     	[x_t, s_t, Geo, Int] = newton(k, x_t, s_t, R, F_t, Geo, Mat, Set, Int);
 		
 		if mod(k, Set.save_freq) == 0
-			c = k/Set.save_freq + 1; % This goes to 1 more than k, is it good?
+			c = k/Set.save_freq;
 			Result = saveOutData(t, c, k, x_t, s_t, F_t, T, M, Geo, Mat, Set, Result);
 			writeOut(c,Geo,Set,Result);
 			

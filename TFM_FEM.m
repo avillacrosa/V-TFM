@@ -12,7 +12,13 @@ close all; clear; clc;
 % pivFilter(emax, n, p,  settings, tmax)
 %% COMPUTE TRACTION FORCES
 % calcTractionF(emax, n, p,  settings, tmax)
-calcTractionFVE(emax, n, p,  settings, tmax)
+% nzs = [5, 8, 10];
+nzs = [2];
+
+for nz = 1:length(nzs)
+	settings.nz = nzs(nz);
+	calcTractionFVE(emax, n, p,  settings, tmax)
+end
 %% MASKING
 % masking(emax, n, p, settings, tmax)
 %% STRESS MICROSCOPY

@@ -8,6 +8,12 @@ function [u, fix] = buildDirichletIVP(Geo, Mat, Set)
 		u = harmTFM(Geo, Set);
 		[~, top_bc_xy] = ext_z(0, Geo);
 		fix(top_bc_xy,:) = true;
+	elseif strcmpi(Geo.uPR, 'dipole')
+		[u, fixN] = dipoTFM(Geo, Set);
+		fix(fixN,1) = true;
+	elseif strcmpi(Geo.uPR, 'pole')
+		[u, fixN] = poleTFM(Geo, Set);
+		fix(fixN,1)  = true;
     elseif ~isempty(Geo.uPR)
         u = Geo.uPR;
         % Do not trust MATLAB if it says find is not necessary. It is lying

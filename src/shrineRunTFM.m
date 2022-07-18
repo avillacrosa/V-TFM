@@ -1,8 +1,7 @@
-function [tx_t, ty_t] = shrineRunTFM(dt, E, nu, d, h, ux, uy, tmax)
+function [tx_t, ty_t] = shrineRunTFM(dt, E, nu, d, h, ux, uy, nz)
     %% Define simulation parameters for TFM
     fprintf("> Initiating viscoelastic FEM solver for TFM \n")
 
-    nz = 2;
 	%% DISCLAIMERS FOR TFM CODE
 	% - d is the distance (not inany case in pixels) between grid points
 	% - however, disptracs have x, y coordinates in pixels not distances!
@@ -15,23 +14,26 @@ function [tx_t, ty_t] = shrineRunTFM(dt, E, nu, d, h, ux, uy, tmax)
     Geo.uPR = zeros(Geo.ns(1)*Geo.ns(2)*Geo.ns(3), 3, size(ux,3));
     Geo.dim = 3;
     [~, zl_idx] = ext_z(0, Geo);
-% 	for t = 1:size(ux,3)
-	for t = 1:1
+	for t = 1:size(ux,3)
 		uxt = ux(:,:,t)';
 		uyt = uy(:,:,t)';
     	Geo.uPR(zl_idx,[1,2],t) = [uxt(:), uyt(:)];
 	end
 	
-    Geo.uBC = [ 3 0 1 0; 3 0 2 0; 3 0 3 0; 3 h 3 0];
+%     Geo.uBC = [ 3 0 1 0; 3 0 2 0; 3 0 3 0; 3 h 3 0];
+    Geo.uBC = [ 3 0 1 0; 3 0 2 0; 3 0 3 0];
+
     
 	Mat.E  = E; Mat.nu = nu;
 	Mat.model = 'elastic'; Mat.elast = 'hookean';
 	Mat.visco = 10;
 
 	Set.dt     = dt; Set.dt_obs = Set.dt;
-	Set.time_incr = 1; Set.save_freq = 1;
+% 	Set.time_incr = size(ux,3); 
+	Set.time_incr = 1; 
+	Set.save_freq = 1;
 	Set.output = true;
-    Set.name = 'tfm_test';
+    Set.name = sprintf('tfm_fem_nz%d', nz);
 	Set.Boussinesq = false;
     %% Run
 	Result = runTFM(Geo, Mat, Set);
@@ -40,8 +42,8 @@ function [tx_t, ty_t] = shrineRunTFM(dt, E, nu, d, h, ux, uy, tmax)
     tx_t = zeros(Geo.ns(2), Geo.ns(1), size(ux,3));
     ty_t = zeros(Geo.ns(2), Geo.ns(1), size(ux,3));
     for t = 1:Set.time_incr
-        tx = vec_to_grid(Result.t_top(:,1,t+1), Geo)';
-        ty = vec_to_grid(Result.t_top(:,2,t+1), Geo)';
+        tx = vec_to_grid(Result.t_top(:,1,t), Geo)';
+        ty = vec_to_grid(Result.t_top(:,2,t), Geo)';
 		tx_t(:,:,t) = tx;
 		ty_t(:,:,t) = ty;
     end

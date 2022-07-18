@@ -63,7 +63,7 @@ function [emax, n, p, settings, tmax]=calcTractionFVE(emax, n, p, settings, tmax
 			uy_t(:,:,it) = uy_in_metres;
 			rmpath(p.TFMlab);
 		end
-        [tx_t, ty_t] = shrineRunTFM(settings.tInt, settings.E,settings.nu,settings.d,settings.H,ux_t,uy_t,tmax(e));
+        [tx_t, ty_t] = shrineRunTFM(settings.tInt, settings.E,settings.nu,settings.d,settings.H,ux_t,uy_t,settings.nz);
 		for it=1:tmax(e)
     		disptrac_t=load(fullfile(p.files.pivdisptrac{e},n.files.pivdisp{e,it}),'pivmatrix','-ascii');
 			tx = tx_t(:,:,it); ux = ux_t(:,:,it);

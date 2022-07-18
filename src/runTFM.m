@@ -3,13 +3,13 @@
 % appropiate solver for the problem (hookean = linear; neohookean/venant =
 % nonlinear)
 %--------------------------------------------------------------------------
-function Result = runTFM(Geo, Mat, Set)
+function [Result, Geo, Mat, Set] = runTFM(Geo, Mat, Set)
 	%% Initialize other data necessary for sim
     t_start = tic;
 	[Geo, Mat, Set, Result] = initializeData(Geo, Mat, Set);
 
 	%% Solve the system
-    writeOut(1,Geo,Set,Result);
+%     writeOut(1,Geo,Set,Result);
 	if Set.Boussinesq
 		fprintf("> Using Boussinesq solver\n")
 		Result = boussinesq(Geo, Mat, Set, Result);
