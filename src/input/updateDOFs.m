@@ -1,5 +1,6 @@
 function [Geo, Set] = updateDOFs(k, x_t, Geo, Mat, Set)
 	if Set.nano
+        k = k + Set.dk;
 		Set.r0(end) = Set.r0i(end) - Set.h(k);
 		if k-1 > 0
 			load_cond = (Set.h(k) - Set.h(k-1))>0;
@@ -8,8 +9,7 @@ function [Geo, Set] = updateDOFs(k, x_t, Geo, Mat, Set)
 		end
 		fixR = false(Geo.n_nodes, Geo.dim);
 		if load_cond % LOADING
-			kx = max(k+Set.dk-1, 1);
-			x_kv = ref_nvec(x_t(:,kx), Geo.n_nodes, Geo.dim);
+			x_kv = ref_nvec(x_t(:,k), Geo.n_nodes, Geo.dim);
 			fixR(:,end) = vecnorm(x_kv-Set.r0, 2, 2)<Set.r;
 		else
 			fixR = Geo.fixR(:,:,k);

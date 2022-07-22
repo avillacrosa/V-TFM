@@ -2,6 +2,7 @@ function [dQ, Q, x_t] = updateDirichlet(k, x_t, Geo, Mat, Set)
 	Q  = speye(Geo.n_nodes*Geo.dim);
 	dQ = sparse(Geo.n_nodes*Geo.dim, Geo.n_nodes*Geo.dim);
 	if Set.nano
+        k = k + Set.dk;
 		fullIdx = find(vec_nvec(Geo.fixR(:,:,k)));
     	Q = eye(Geo.n_nodes*Geo.dim);
 		for id = 1:length(fullIdx)

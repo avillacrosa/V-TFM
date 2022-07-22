@@ -1,8 +1,9 @@
 clc; close all; clear
-models = ["elastic", "maxwell", "gmaxwell"];
+addpath(genpath('src'));
+models = ["maxwell", "gmaxwell"];
 elastics = ["hookean", "neohookean"];
 
-expFile = 'C:\Users\avill\Documents\Cardiomyocite Bursts\Nanoindenter\20220207_PAA_15kPa\matrix_scan01\20220207_PAA_15kPa S-1 X-1 Y-1 I-1.txt';
+expFile = 'C:\Users\avill\OneDrive - TU Eindhoven\0. Data\CardioBursts\Nanoindentation\20220207_PAA_15kPa\matrix_scan01\20220207_PAA_15kPa S-1 X-1 Y-1 I-1.txt';
 
 eta = 1;
 for m = 1:length(models)
