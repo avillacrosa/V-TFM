@@ -28,8 +28,7 @@ function [tx_t, ty_t] = shrineRunTFM(dt, E, nu, d, h, ux, uy, nz)
 	Mat.model = 'elastic'; Mat.elast = 'hookean';
 
 	Set.dt     = dt; Set.dt_obs = Set.dt;
-% 	Set.time_incr = size(ux,3); 
-	Set.time_incr = 1; 
+	Set.time_incr = size(ux,3); 
 	Set.save_freq = 1;
 	Set.output = true;
     Set.name = sprintf('tfm_fem_nz%d', nz);

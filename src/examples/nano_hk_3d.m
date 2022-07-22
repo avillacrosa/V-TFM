@@ -3,7 +3,7 @@ function [Geo, Mat, Set] = nano_hk_3d(Geo, Mat, Set)
     % Number of nodes in each direction
 %     Geo.ns = [50 50 3];
 %     Geo.ds = [1/49 1/49 1/15];
-	n = 20;
+	n = 15;
     Geo.ns = [n n 3];
     Geo.ds = [1/(n-1) 1/(n-1) 1/15];
 
@@ -31,12 +31,12 @@ function [Geo, Mat, Set] = nano_hk_3d(Geo, Mat, Set)
 	Set.nano = true;
 	Set.r    = 0.2;
 	Set.r0   = [0.5, 0.5, (Geo.ns(3)-1)*Geo.ds(3)+Set.r];
-	Set.v    = -0.005;
+	Set.v    = -0.0005;
 	Set.h    = 0.10;
 	Set.dt   = 1;
 	
 	Set.time_incr = -2*(Set.h/Set.v)/Set.dt;
-	Set.time_incr = int8(Set.time_incr)+1;
+	Set.time_incr = int16(Set.time_incr)+1;
 
 	Set.name = 'nano3D';
 end

@@ -1,4 +1,8 @@
 function plotResults(Geo, Mat, Set, Result)
+% 	plotTractionsTFM(Geo, Set, Result)
+	if Set.nano
+		plotNano(Geo, Mat, Result);
+	end
 	if Geo.dim == 2
 		femplot(Result.x(:,:,end), Geo, Mat, Set);
 	end

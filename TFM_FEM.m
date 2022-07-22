@@ -13,10 +13,11 @@ close all; clear; clc;
 %% COMPUTE TRACTION FORCES
 % calcTractionF(emax, n, p,  settings, tmax)
 % nzs = [5, 8, 10];
-nzs = [2];
+nzs = [6, 8, 10];
 
 for nz = 1:length(nzs)
 	settings.nz = nzs(nz);
+	nzs(nz)
 	calcTractionFVE(emax, n, p,  settings, tmax)
 end
 %% MASKING
